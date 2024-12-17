@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Pet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .pet {
+      width: 150px;
+      height: 150px;
+      margin: 20px auto;
+      background: url('https://via.placeholder.com/150') no-repeat center/cover;
+      border-radius: 50%;
+      border: 5px solid #82b6a9;
+    }
+    .stats {
+      margin: 20px auto;
+      width: 300px;
+      text-align: left;
+    }
+    .stats div {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #de7357;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #82b6a9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Take Care of Your Virtual Pet</h1>
+    <div class="pet" id="pet"></div>
+    <div class="stats">
+      <div>Health: <span id="health">100</span></div>
+      <div>Happiness: <span id="happiness">100</span></div>
+      <div>Hunger: <span id="hunger">0</span></div>
+    </div>
+    <button onclick="feedPet()">Feed</button>
+    <button onclick="playWithPet()">Play</button>
+  </div>
+  
+  <script>
+    // Initialize stats
+    let health = 100;
+    let happiness = 100;
+    let hunger = 0;
+
+    // Update stats in the UI
+    function updateStats() {
+      document.getElementById('health').textContent = health;
+      document.getElementById('happiness').textContent = happiness;
+      document.getElementById('hunger').textContent = hunger;
+    }
+
+    // Functions to interact with the pet
+    function feedPet() {
+      if (hunger > 0) {
+        hunger -= 10;
+        happiness += 5;
+        health += 5;
+      } else {
+        alert("Your pet is not hungry!");
+      }
+      updateStats();
+    }
+
+    function playWithPet() {
+      if (happiness < 100) {
+        happiness += 10;
+        hunger += 5;
+      } else {
+        alert("Your pet is already very happy!");
+      }
+      updateStats();
+    }
+
+    // Simulate time passing
+    setInterval(() => {
+      hunger += 5;
+      happiness -= 2;
+      health -= hunger > 50 ? 5 : 0;
+
+      if (health <= 0) {
+        alert("Your pet needs attention immediately!");
+        health = 10;
+      }
+
+      if (happiness < 0) happiness = 0;
+      if (hunger > 100) hunger = 100;
+
+      updateStats();
+    }, 5000); // Updates every 5 seconds
+
+    // Initial stats display
+    updateStats();
+  </script>
+</body>
+</html>
